@@ -27,6 +27,7 @@ export default {
     }
   },
   methods:{
+    // 创建地图
     async createMap(){
       const _this = this;
       if(_this.map === ""){
@@ -42,6 +43,18 @@ export default {
         _this.map.addLayer(_this.graphicsLayer);
       }
     },
+    // 根据坐标画点
+    async drawPointByLocation(){},
+    // 根据坐标画点使用图片
+    async drawPointByLoactionUseImg(){},
+    // 使用工具栏画点
+    async drawPointUseToolbar(){},
+    // 使用工具栏画点(多点)
+    async drawPointsUseToolbar(){},
+    // 清除
+    clear(){
+      
+    }
   },
   mounted(){
     this.createMap();
