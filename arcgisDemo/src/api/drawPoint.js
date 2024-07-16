@@ -44,10 +44,54 @@ const drawPointByLocationApi = async (x,y,borderColor,fillColor)=>{
 // 需要参数:x,y坐标、图片地址
 const drawPicPointByLocationApi = async (x,y,url) => {
     const _this = this;
-    const [Point,SpatialReference,graphic,PictureMarkerSymbol] = await esriLoader.loadModules([
+    const [Point,SpatialReference,Graphic,PictureMarkerSymbol] = await esriLoader.loadModules([
         "esri/geometry/Point",
         "esri/SpatialReference",
         "esri/graphic",
         "esri/symbols/PictureMarkerSymbol",
     ]);//加载所需的arcgis组件
+    
+    let point = new Point(x,y,new SpatialReference({wkid:EPSG}));//创建点，传入坐标和坐标系
+    let symbol;
+    if(url === undefined){
+        // 如果不传图片，就给个默认值
+        symbol = new PictureMarkerSymbol(require('@/assets/location.png'),20,30);//默认图片和尺寸
+
+    }else{
+        symbol = new PictureMarkerSymbol(require('@/assets/'+url),30,30);// 传入图片和大小
+    }
+    let graphic = new Graphic(point,symbol)
+    return graphic;
+}
+
+// 使用工具栏画点（点击画点）
+// 需要参数：地图对象、工具类型、图片地址
+const drawPointByToolbarApi = async (map,type,url) => {
+    const _this = this;
+    const [Graphic,PictureMarkerSymbol,Draw] = await esriLoader.loadModules([
+        "esri/graphic",
+        "esri/symbols/PictureMarkerSymbol",
+        "esri/toolbars/draw"
+    ]);//加载所需的arcgis组件
+    let toolbar = new Draw(map);//创建工具栏,绑定到map上
+    toolbar.activate(Draw[type]);// 激活特定工具,POINT和MULTI_POINT是点
+    toolbar.on("draw-complete",evt => {
+        toolbar.deactivate();//失效后，绘画就停止了
+        let symbol;
+        if(url === undefined){
+            // 如果图片不传，就给默认值
+            symbol = new PictureMarkerSymbol(require('@/assets/location.png'),30,30);// 默认图片和尺寸
+
+        }else{
+            symbol = new PictureMarkerSymbol(require('@/assets/'+url),20,30);// 传入图片和尺寸
+        }
+        let graphic = new Graphic(evt.geometry,symbol);// 创建graphic
+        map.graphics.add(graphic);//map对象自带一个graphicsLayer,就是map.graphics,所以也可以往这个上面添加graphic
+    })
+}
+
+export {
+    drawPointByLocationApi,
+    drawPicPointByLocationApi,
+    drawPointByToolbarApi,
 }
