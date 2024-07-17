@@ -31,6 +31,7 @@ export default defineConfig({
         text: 'ArcGis for javascript Api',
         items: [
           { text: '开始创建', link: '/ArcGisViews/arcgisforjsApi' },
+          { text: '画点', link: '/ArcGisViews/drawPointApi' },
         ]
       },
       {
