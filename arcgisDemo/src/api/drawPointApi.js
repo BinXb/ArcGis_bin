@@ -37,7 +37,6 @@ const drawPointByLocationApi = async (x,y,borderColor,fillColor)=>{
     let graphic = new Graphic(point,symbol);//创建graphic
 
     return graphic;
-
 }
 
 // 根据坐标画点(使用图片，最常用)

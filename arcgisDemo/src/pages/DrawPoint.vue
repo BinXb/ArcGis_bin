@@ -31,7 +31,7 @@ import {
   drawPicPointByLocationApi,
   drawPointByLocationApi,
   drawPointByToolbarApi
-} from "@/api/drawPoint";
+} from "@/api/drawPointApi";
 export default {
   data() {
     return {
@@ -111,4 +111,4 @@ export default {
     width: 80%;
   }
 }
-</style>
+</style>@/api/drawPointApi
