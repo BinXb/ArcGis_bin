@@ -1,3 +1,21 @@
+# 创建图例
+
+:::tip 提示
+创建图例只能在动态图层上面进行，并且可以添加多个动态图层，需要组件`Legend`
+:::
+
+## 开始
+
+### 准备地图
+
+> 准备地图
+>
+> 创建静态图层
+>
+> 创建动态图层
+
+:::code-group
+~~~vue [地图准备:createLegend.vue]
 <template>
   <div class="container">
     <div class="map" id="map" ref="map"></div>
@@ -11,7 +29,6 @@
     <!-- 图例结束 -->
   </div>
 </template>
-
 <script>
 // 导入arcgis依赖
 import * as esriLoader from "esri-loader";
@@ -25,8 +42,6 @@ import createMapApi from "@/api/createMapApi";
 import createTileLayerApi from "@/api/createTileLayerApi";
 // 导入动态图层
 import createDynamicLayerApi from "@/api/CreateDynamicLayerApi";
-// 导入创建图例
-import { createLegendApi } from "@/api/createLengendApi";
 export default {
   data() {
     return {
@@ -51,6 +66,51 @@ export default {
         _this.map.addLayer(testLayer);
       }
     },
+  },
+  mounted(){
+    this.createMap();
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.legendBox {
+    position: absolute !important; //需要加上!important，否则会被覆盖掉
+    right: 10px;
+    bottom: 10px;
+    width: 200px;
+    border: 1px solid #000;
+		background: rgba(255, 255, 255, 0.8);
+		padding: 10px;
+		z-index: 9999
+  }
+</style>
+~~~
+
+~~~js{7-8,11} [创建图例：createLegendApi.js]
+import * as esriLoader from "esri-loader";
+
+// 创建图例
+// 需要参数：地图对象、图例盒子Id
+const createLegendApi = async (map,id)=> {
+  const _this = this;
+  const [Legend] = await esriLoader.loadModules([
+    "esri/dijit/Legend",
+  ]);//加载arcgis所需要组件
+  // 开始创建图例
+  let legend = new Legend({map},id);
+  return legend
+}
+export {
+  createLegendApi,
+}
+~~~
+
+~~~vue{11-13,20-24} [使用：createLegend.vue]
+<script>
+// 导入创建图例
+import { createLegendApi } from "@/api/createLengendApi";
+methods:{
     // 创建图例
     async createLegend(){
       const _this = this;
@@ -73,22 +133,43 @@ export default {
         },200)
       }
     }
-  },
-  mounted(){
-    this.createMap();
-  }
-};
+}
 </script>
 
-<style lang="scss" scoped>
-.legendBox {
-    position: absolute !important; //需要加上!important，否则会被覆盖掉
-    right: 10px;
-    bottom: 10px;
-    width: 200px;
-    border: 1px solid #000;
-		background: rgba(255, 255, 255, 0.8);
-		padding: 10px;
-		z-index: 9999
-  }
-</style>
+~~~
+:::
+
+## 组件和方法
+
+:::warning 组件
+在创建图例中只出现了一个组件`Legend`,利用此组件通过传入map对象和图例容器Id，可以创建图例。
+:::
+
+### 组件
+
+#### Legend
+
+~~~js
+let [Legend] = await esriLoader.loadModules([
+  "esri/dijit/Legend"
+])
+
+// 用法：new Legend({map},id);
+new Legend({map},id)
+~~~
+
+### 方法
+
+legend的方法
+
+#### startup() - 启动图例
+~~~js
+// 用法 
+legend.startup()
+~~~
+
+#### destroy() - 销毁图例
+~~~js
+// 用法 
+legend.destroy()
+~~~

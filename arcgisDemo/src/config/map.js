@@ -8,7 +8,8 @@ const czdzUrl = 'https://arcgis-waf.qj-xc.cn:6443/arcgis/rest/services/CZ_Vector
 const czdzMarkUrl = 'https://61.177.71.243:8184/historyraster/rest/services/historyVector/js_sldt_grey/MapServer'; //常州电子底图-标记
 const czdzImageMarkUrl = 'http://58.216.48.11:6080/arcgis/rest/services/Image_2021/MapServer'; //常州影像底图-标记
 // 没有常州影像-标记底图
-const computeUrl = "http://58.216.48.11:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer"; //这个服务是用来计算距离的
+const computeUrl = "http://10.4.1.50:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer";
+// const computeUrl = "http://58.216.48.11:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer"; //这个服务是用来计算距离的
 const xingzhengUrl = "http://www.czch.com.cn:6080/arcgis/rest/services/DJT_XZJX/MapServer"; //行政区域的服务
 const testUrl = "http://www.czch.com.cn:6080/arcgis/rest/services/jkws_base/MapServer"; //(动态图层)测试服务
 const serverUrl = "http://www.czch.com.cn:6080/arcgis/rest/services/DJT/MapServer"; //宗地，地籍，地籍子区的服务

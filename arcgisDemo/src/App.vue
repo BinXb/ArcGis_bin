@@ -25,6 +25,20 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .map{
+      width: 100%;
+      height: 100%;
+    }
+    .toolbar{
+      position: absolute;
+      top: 10px;
+      left: 8px;
+    }
+}
 
 nav {
   padding: 30px;
